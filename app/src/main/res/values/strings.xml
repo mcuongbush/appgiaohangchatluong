@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">GiaoHangChatLuong</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="DangKyTaiKhoan">Đăng ký tài khoản</string>
+    <string name="DangNhap">ĐĂNG NHẬP</string>
+    <string name="MatKhau">Mật khẩu</string>
+    <string name="HeThongGiaoHang">HỆ THỐNG GIAO HÀNG</string>
+    <string name="QuenMatKhau"> <u>Quên mật khẩu?</u></string>
+    <string name="DiaChi">Địa chỉ</string>
+    <string name="Nu">Nữ</string>
+    <string name="TenTaiKhoan">Tên tài khoản</string>
+    <string name="XacNhan">Xác nhận</string>
+    <string name="background">background</string>
+    <string name="NhapLaiMatKhau">Nhập lại mật khẩu</string>
+    <string name="SoDienThoai">Số diện thoại</string>
+    <string name="HoTen">Họ tên</string>
+    <string name="DangKyGuiHang">Đăng ký gửi hàng</string>
+    <string name="TenHangHoa">Tên hàng hóa</string>
+    <string name="GhiChu">Ghi chú</string>
+    <string name="LoaiHangHoa">Loại hàng hóa</string>
+    <string name="CanNang">Cân nặng</string>
+    <string name="DonViTinh">Đơn vị tính</string>
+    <string name="MoTaHangHoa">Mô tả hàng hóa</string>
+    <string name="HoTenNguoiNhan">Họ tên người nhận</string>
+    <string name="SoDienThoaiNguoiNhan">Số điện thoại người nhận</string>
+    <string name="DiaChiNguoiNhan">Địa chỉ người nhận</string>
+    <string name="cod">COD</string>
+    <string name="LoaiVanChuyen">Loại vận chuyển</string>
+    <string name="DangXuat">Đăng xuất</string>
+    <string name="SuaThongTin">Sửa thông tin</string>
+</resources>
