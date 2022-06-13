@@ -86,6 +86,7 @@ public class ProfileFragment extends Fragment {
     EditText aTxt_UserAddress;
     Button btnDangXuat;
     Button btnSuaThongTin;
+    boolean flag;
 
 
     @Override
@@ -138,6 +139,9 @@ public class ProfileFragment extends Fragment {
             alert.setTitle("Xác nhận!");
             alert.show();
         });
+        btnSuaThongTin.setOnClickListener(v->{
+//            setEnable(true);
+        });
 
     }
     void setEnable(boolean b)
@@ -147,6 +151,7 @@ public class ProfileFragment extends Fragment {
         Txt_UserGender.setEnabled(b);
         Txt_UserPhone.setEnabled(b);
         aTxt_UserAddress.setEnabled(b);
+        flag =b;
     }
 
     void getData()

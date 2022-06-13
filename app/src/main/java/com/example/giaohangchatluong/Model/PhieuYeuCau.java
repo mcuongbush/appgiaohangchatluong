@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class PhieuYeuCau {
     String SoPYC;
-    Date NgayLap;
+    String NgayLap;
     String MaKH;
     String MaKN;
     String MaLVC;
@@ -19,11 +19,11 @@ public class PhieuYeuCau {
         SoPYC = soPYC;
     }
 
-    public Date getNgayLap() {
+    public String getNgayLap() {
         return NgayLap;
     }
 
-    public void setNgayLap(Date ngayLap) {
+    public void setNgayLap(String ngayLap) {
         NgayLap = ngayLap;
     }
 
@@ -67,7 +67,7 @@ public class PhieuYeuCau {
         KhoiLuong = khoiLuong;
     }
 
-    public PhieuYeuCau(Date NgayLap, String MaKH, float khoiluong, String MaKN, String MaLVC, long Thanhtoan)
+    public PhieuYeuCau(String NgayLap, String MaKH, float khoiluong, String MaKN, String MaLVC, long Thanhtoan)
     {
         this.NgayLap=NgayLap;
         this.MaKH=MaKH;

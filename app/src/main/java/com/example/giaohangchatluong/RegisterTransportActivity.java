@@ -2,6 +2,8 @@ package com.example.giaohangchatluong;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -16,6 +18,7 @@ import com.example.giaohangchatluong.Model.KhachNhan;
 import com.example.giaohangchatluong.Model.LoaiHH;
 import com.example.giaohangchatluong.Model.LoaiVanChuyen;
 import com.example.giaohangchatluong.Model.PhieuGuiHang;
+import com.example.giaohangchatluong.Model.PhieuYeuCau;
 import com.example.giaohangchatluong.api.APIService;
 
 import java.time.LocalDate;
@@ -51,7 +54,9 @@ public class RegisterTransportActivity extends AppCompatActivity {
     String MaLVC;
     String MaLHH;
     String MaKN;
-    float Total;
+    long GiaLVC;
+
+    long Total;
 
     Boolean availableKN = false;
 
@@ -86,6 +91,7 @@ public class RegisterTransportActivity extends AppCompatActivity {
             }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
             String date = LocalDate.now().format(formatter);
+            PhieuYeuCau pyc =new PhieuYeuCau(LocalDate.now().format(formatter),MaKH,Float.parseFloat(txtWeight.getText().toString()),MaKN,MaLVC,Total);
             PhieuGuiHang pgh = new PhieuGuiHang(LocalDate.now().format(formatter), String.valueOf(cBxCOD.isChecked()).toUpperCase(), MaKH,MaLVC, MaKN);
             APIService.API_SERVICE.addPhieuGuiHang(pgh).enqueue(new Callback<List<PhieuGuiHang>>() {
                 @Override
@@ -201,10 +207,13 @@ public class RegisterTransportActivity extends AppCompatActivity {
         APIService.API_SERVICE.getLoaiVC().enqueue(new Callback<List<LoaiVanChuyen>>() {
             @Override
             public void onResponse(Call<List<LoaiVanChuyen>> call, Response<List<LoaiVanChuyen>> response) {
-                adapterLVC = new ArrayAdapter<LoaiVanChuyen>(context, android.R.layout.simple_spinner_item,response.body());
+                adapterLVC = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, response.body());
                 txtLoaiVC = findViewById(R.id.txtLoaiVC);
                 txtLoaiVC.setAdapter(adapterLVC);
-                txtLoaiVC.setOnItemClickListener((parent, view, position, id) -> MaLVC=adapterLVC.getItem(position).getMaLVC());
+                txtLoaiVC.setOnItemClickListener((parent, view, position, id) -> {
+                    GiaLVC=adapterLVC.getItem(position).getGia();
+                    MaLVC=adapterLVC.getItem(position).getMaLVC();
+                });
             }
             @Override
             public void onFailure(Call<List<LoaiVanChuyen>> call, Throwable t) {
