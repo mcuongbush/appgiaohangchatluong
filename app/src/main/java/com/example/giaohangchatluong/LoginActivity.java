@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,8 @@ public class LoginActivity extends AppCompatActivity {
     static String MaKH;
     Boolean logout=false;
 
+    ImageButton btn_search;
+
     ActivityResultLauncher<Intent> startLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
@@ -61,6 +64,9 @@ public class LoginActivity extends AppCompatActivity {
         txtUsername=findViewById(R.id.txtUsername);
         txtPassword=findViewById(R.id.txtPassword);
         txtForgetPass=findViewById(R.id.txtForgetPass);
+        btn_search=findViewById(R.id.btn_search);
+
+
 
         txtForgetPass.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -58,11 +58,16 @@ public interface APIService {
 
 
 
-    @POST ("khachnhan")
+    @PUT ("khachnhan")
     Call<List<KhachNhan>> addKhachNhan(@Body KhachNhan khachNhan);
 
-    @POST("khachhang")
+    @PUT("khachhang")
     Call<List<KhachHang>> addKhachHang(@Body KhachHang khachHang);
+
+    @POST("khachhang")
+    Call<KhachHang> updKhachHang(@Body KhachHang khachHang);
+
+
 
     @PUT("taikhoan")
     Call<List<TaiKhoanKH>> addTaiKhoanKH(@Body TaiKhoanKH taiKhoanKH);

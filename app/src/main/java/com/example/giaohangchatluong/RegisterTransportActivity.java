@@ -32,10 +32,10 @@ import retrofit2.Response;
 
 public class RegisterTransportActivity extends AppCompatActivity {
 
-    public static List<LoaiHH> lstLHH;
+    //public static List<LoaiHH> lstLHH;
     RegisterTransportActivity context;
 
-    List<String> lstDV;
+    //List<String> lstDV;
 
 
 
@@ -69,7 +69,7 @@ public class RegisterTransportActivity extends AppCompatActivity {
 
         context=this;
         loadControll();
-        getData();
+
     }
 
 
@@ -185,6 +185,23 @@ public class RegisterTransportActivity extends AppCompatActivity {
             AlertDialog alert = Builder.create();
             alert.setTitle("Xác nhận!");
             alert.show();
+        });
+
+        APIService.API_SERVICE.getLoaiVC().enqueue(new Callback<List<LoaiVanChuyen>>() {
+            @Override
+            public void onResponse(Call<List<LoaiVanChuyen>> call, Response<List<LoaiVanChuyen>> response) {
+                adapterLVC = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, response.body());
+                txtLoaiVC = findViewById(R.id.txtLoaiVC);
+                txtLoaiVC.setAdapter(adapterLVC);
+                txtLoaiVC.setOnItemClickListener((parent, view, position, id) -> {
+                    GiaLVC=adapterLVC.getItem(position).getGia();
+                    MaLVC=adapterLVC.getItem(position).getMaLVC();
+                });
+            }
+            @Override
+            public void onFailure(Call<List<LoaiVanChuyen>> call, Throwable t) {
+
+            }
         });
     }
 

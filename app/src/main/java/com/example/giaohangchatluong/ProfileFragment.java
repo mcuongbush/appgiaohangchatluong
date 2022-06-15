@@ -13,6 +13,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -80,7 +81,7 @@ public class ProfileFragment extends Fragment {
     String TenTK;
     View fragmentView;
     EditText Txt_TenKH;
-    EditText Txt_UserName;
+    TextView Txt_UserName;
     EditText Txt_UserGender;
     EditText Txt_UserPhone;
     EditText aTxt_UserAddress;
@@ -140,14 +141,36 @@ public class ProfileFragment extends Fragment {
             alert.show();
         });
         btnSuaThongTin.setOnClickListener(v->{
-//            setEnable(true);
+            if(!flag){
+                setEnable(true);
+            }
+            else{
+                String gt ;
+                if(Txt_UserGender.getText().toString().equals("Nam")) gt = "false";
+                else gt = "true";
+                KhachHang kh = new KhachHang(MaKH,Txt_TenKH.getText().toString(),Txt_UserPhone.getText().toString(),gt,aTxt_UserAddress.getText().toString());
+                APIService.API_SERVICE.updKhachHang(kh).enqueue(new Callback<KhachHang>() {
+                    @Override
+                    public void onResponse(Call<KhachHang> call, Response<KhachHang> response) {
+
+
+                        Toast.makeText(fragmentView.getContext(),"Sử thông tin thành công",Toast.LENGTH_LONG).show();
+
+                        setEnable(false);
+                    }
+
+                    @Override
+                    public void onFailure(Call<KhachHang> call, Throwable t) {
+
+                    }
+                });
+            }
         });
 
     }
     void setEnable(boolean b)
     {
         Txt_TenKH.setEnabled(b);
-        Txt_UserName.setEnabled(b);
         Txt_UserGender.setEnabled(b);
         Txt_UserPhone.setEnabled(b);
         aTxt_UserAddress.setEnabled(b);

@@ -69,8 +69,6 @@ public class HomeFragment extends Fragment {
 //    }
 
 
-    List<HoaDon> lst;
-    Button btn_Reg_Trans;
     View fragmentView ;
     String MaKH;
     @Override
@@ -100,8 +98,6 @@ public class HomeFragment extends Fragment {
             intent.putExtra("MaKH",MaKH);
             startActivity(intent);
         });
-        final ImageButton btn_SearchSlip = fragmentView.findViewById(R.id.btn_search);
-        btn_SearchSlip.setOnClickListener(v -> startActivity(new Intent(fragmentView.getContext(),SearchActivity.class)));
 
         return fragmentView;
     }

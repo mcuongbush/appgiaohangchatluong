@@ -7,8 +7,17 @@ public class KhachHang {
     String SDT;
     String GioiTinh;
 
+
     public KhachHang( String tenKH,String SDT , String gioiTinh, String diaChi) {
 
+        TenKH = tenKH;
+        DiaChi = diaChi;
+        this.SDT = SDT;
+        GioiTinh = gioiTinh;
+    }
+
+    public KhachHang( String MaKH,String tenKH,String SDT , String gioiTinh, String diaChi) {
+        this.MaKH=MaKH;
         TenKH = tenKH;
         DiaChi = diaChi;
         this.SDT = SDT;
