@@ -159,7 +159,7 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onResponse(Call<KhachHang> call, Response<KhachHang> response) {
 
-                        Toast.makeText(fragmentView.getContext(),"Sử thông tin thành công",Toast.LENGTH_LONG).show();
+                        Toast.makeText(fragmentView.getContext(),"Sửa thông tin thành công",Toast.LENGTH_LONG).show();
 
                         setEnable(false);
                     }

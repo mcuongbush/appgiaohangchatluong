@@ -68,7 +68,8 @@ public class HomeFragment extends Fragment {
 //        }
 //    }
 
-
+    double a;
+    double b;
     View fragmentView ;
     String MaKH;
     @Override
@@ -77,6 +78,11 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         fragmentView= inflater.inflate(R.layout.fragment_home, container, false);
 
+        a = 20.4;
+        b = 2.6;
+
+        int t = (int) (a*10) %10;
+        double c = (double) Math.round((a*10+10)/10);
         MainActivity mainActivity = (MainActivity) getActivity();
         MaKH = mainActivity.getMaKH();
         final ListView lst_Item = fragmentView.findViewById(R.id.lst_Item);

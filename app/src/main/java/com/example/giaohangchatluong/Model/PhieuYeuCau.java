@@ -9,7 +9,7 @@ public class PhieuYeuCau {
     String MaKN;
     String MaLVC;
     long ThanhToan;
-    float KhoiLuong;
+    double KhoiLuong;
 
     public String getSoPYC() {
         return SoPYC;
@@ -59,15 +59,15 @@ public class PhieuYeuCau {
         ThanhToan = thanhToan;
     }
 
-    public float getKhoiLuong() {
+    public double getKhoiLuong() {
         return KhoiLuong;
     }
 
-    public void setKhoiLuong(float khoiLuong) {
+    public void setKhoiLuong(double khoiLuong) {
         KhoiLuong = khoiLuong;
     }
 
-    public PhieuYeuCau(String NgayLap, String MaKH, float khoiluong, String MaKN, String MaLVC, long Thanhtoan)
+    public PhieuYeuCau(String NgayLap, String MaKH, double khoiluong, String MaKN, String MaLVC, long Thanhtoan)
     {
         this.NgayLap=NgayLap;
         this.MaKH=MaKH;

@@ -93,7 +93,7 @@ public class RegisterAccountActivity extends AppCompatActivity {
                         List<KhachHang> lstKH = response.body();
                         boolean flag = true;
                         for (KhachHang kh : lstKH) {
-                            if (kh.getSDT().contains(txtCusNumberPhone.getText().toString()))
+                            if (kh.getSDT().equals(txtCusNumberPhone.getText().toString()))
                             {
                                 flag =false;
                                 Toast.makeText(context,"Số điện thoại đã có người sử dụng, vui lòng nhập lại",Toast.LENGTH_LONG).show();

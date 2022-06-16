@@ -101,13 +101,13 @@ public class RegisterTransportActivity extends AppCompatActivity {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
             String date = LocalDate.now().format(formatter);
-            PhieuYeuCau pyc =new PhieuYeuCau(LocalDate.now().format(formatter),MaKH,Float.parseFloat(txtWeight.getText().toString()),MaKN,MaLVC,Total);
+            PhieuYeuCau pyc =new PhieuYeuCau(LocalDate.now().format(formatter),MaKH,Double.parseDouble(txtWeight.getText().toString()),MaKN,MaLVC,Total);
             PhieuGuiHang pgh = new PhieuGuiHang(LocalDate.now().format(formatter), String.valueOf(cBxCOD.isChecked()).toUpperCase(),MaKH,MaLVC, MaKN);
             APIService.API_SERVICE.addPhieuYeuCau(pyc).enqueue(new Callback<List<PhieuYeuCau>>() {
                 @Override
                 public void onResponse(Call<List<PhieuYeuCau>> call, Response<List<PhieuYeuCau>> response) {
                     AlertDialog.Builder Builder = new AlertDialog.Builder(context) ;
-                    Builder.setMessage("Đăng ký phiếu gửi hàng thành công!").setCancelable(true)
+                    Builder.setMessage("Đăng ký phiếu yêu cầu thành công!").setCancelable(true)
                             .setPositiveButton("Đóng", (dialogInterface, i) -> finish());
                     AlertDialog alert = Builder.create();
                     alert.setTitle("Thông báo!");
@@ -203,12 +203,21 @@ public class RegisterTransportActivity extends AppCompatActivity {
                         public void onResponse(Call<Integer> call, Response<Integer> response) {
                             int km = response.body();
                             if (km < 100) {
-
-                                Total = GiaLVC;
+                                double weight = Double.parseDouble(txtWeight.getText().toString());
+                                if(weight <=1 )
+                                {
+                                    Total = GiaLVC;
+                                }
+                                else {
+                                    long tmp_weight = Math.round( ((weight - 1) *10+10 )/10);
+                                    //double w = (double) Math.round(weight * 10) / 10;
+                                    //int t = (int) (w * 10) % 10;
+                                    Total =  GiaLVC + ((GiaLVC/100)* 5 ) * tmp_weight;
+                                }
                             }
                             else
                             {
-                                Total = GiaLVC + (GiaLVC * (km - 100) / 100);
+                                Total = GiaLVC + ((GiaLVC/100) *25) * (km-100);
                             }
                             txtThanhToan.setText(String.valueOf(Total));
                         }
