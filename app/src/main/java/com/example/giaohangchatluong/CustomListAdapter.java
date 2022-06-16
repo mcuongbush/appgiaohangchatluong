@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.giaohangchatluong.Model.HoaDon;
 
@@ -60,6 +61,12 @@ public class CustomListAdapter extends BaseAdapter {
         else img="ic_danggiao";
         int imgID = this.getMipmapResIdByName(img);
         holder.status.setImageResource(imgID);
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "HD: "+ hd.getSoHD(), Toast.LENGTH_SHORT).show();
+            }
+        });
         return convertView;
 
     }
@@ -67,7 +74,7 @@ public class CustomListAdapter extends BaseAdapter {
         String pkgName = context.getPackageName();
         // Return 0 if not found.
         int resID = context.getResources().getIdentifier(resName , "mipmap", pkgName);
-        Log.i("GiaoHangChatLuong", "Res Name: "+ resName+"==> Res ID = "+ resID);
+        //Log.i("GiaoHangChatLuong", "Res Name: "+ resName+"==> Res ID = "+ resID);
         return resID;
     }
     static class ViewHolder{

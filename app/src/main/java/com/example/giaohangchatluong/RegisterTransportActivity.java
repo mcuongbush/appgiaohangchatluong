@@ -2,6 +2,9 @@ package com.example.giaohangchatluong;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.giaohangchatluong.Model.KhachHang;
 import com.example.giaohangchatluong.Model.KhachNhan;
 import com.example.giaohangchatluong.Model.LoaiHH;
 import com.example.giaohangchatluong.Model.LoaiVanChuyen;
@@ -50,15 +54,18 @@ public class RegisterTransportActivity extends AppCompatActivity {
 
     ArrayAdapter<LoaiHH> adapterLHH;
     ArrayAdapter<LoaiVanChuyen> adapterLVC;
+    String DiaChiKH;
     String MaKH;
     String MaLVC;
     String MaLHH;
     String MaKN;
+    boolean flagTxtAddress;
+    boolean flagTxtWeight;
+    boolean flagLvc;
     long GiaLVC;
-
     long Total;
 
-    Boolean availableKN = false;
+    boolean availableKN = false;
 
     AlertDialog.Builder builder;
     Button btn_Confirm_Transport;
@@ -66,14 +73,16 @@ public class RegisterTransportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_transport);
-
         context=this;
+
+        MaKH = getIntent().getStringExtra("MaKH");
+        getData();
         loadControll();
 
     }
 
 
-    void AddPhieuGuiHang()
+    void AddPhieuYeuCau()
     {
         if(check()) {
             if (!availableKN) {
@@ -90,27 +99,23 @@ public class RegisterTransportActivity extends AppCompatActivity {
                 });
             }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
             String date = LocalDate.now().format(formatter);
             PhieuYeuCau pyc =new PhieuYeuCau(LocalDate.now().format(formatter),MaKH,Float.parseFloat(txtWeight.getText().toString()),MaKN,MaLVC,Total);
-            PhieuGuiHang pgh = new PhieuGuiHang(LocalDate.now().format(formatter), String.valueOf(cBxCOD.isChecked()).toUpperCase(), MaKH,MaLVC, MaKN);
-            APIService.API_SERVICE.addPhieuGuiHang(pgh).enqueue(new Callback<List<PhieuGuiHang>>() {
+            PhieuGuiHang pgh = new PhieuGuiHang(LocalDate.now().format(formatter), String.valueOf(cBxCOD.isChecked()).toUpperCase(),MaKH,MaLVC, MaKN);
+            APIService.API_SERVICE.addPhieuYeuCau(pyc).enqueue(new Callback<List<PhieuYeuCau>>() {
                 @Override
-                public void onResponse(Call<List<PhieuGuiHang>> call, Response<List<PhieuGuiHang>> response) {
+                public void onResponse(Call<List<PhieuYeuCau>> call, Response<List<PhieuYeuCau>> response) {
                     AlertDialog.Builder Builder = new AlertDialog.Builder(context) ;
                     Builder.setMessage("Đăng ký phiếu gửi hàng thành công!").setCancelable(true)
-                            .setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    finish();
-                                }
-                            });
+                            .setPositiveButton("Đóng", (dialogInterface, i) -> finish());
                     AlertDialog alert = Builder.create();
                     alert.setTitle("Thông báo!");
                     alert.show();
                 }
 
                 @Override
-                public void onFailure(Call<List<PhieuGuiHang>> call, Throwable t) {
+                public void onFailure(Call<List<PhieuYeuCau>> call, Throwable t) {
 
                 }
             });
@@ -118,7 +123,7 @@ public class RegisterTransportActivity extends AppCompatActivity {
     }
     Boolean check()
     {
-        return !txtNumberPhoneReceiver.getText().toString().isEmpty() && !txtAddressReceiver.getText().toString().isEmpty() && !txtReceiverName.getText().toString().isEmpty() &&
+        return !txtNumberPhoneReceiver.getText().toString().isEmpty() && Total!=0 && !txtAddressReceiver.getText().toString().isEmpty() && !txtReceiverName.getText().toString().isEmpty() &&
                  !txtWeight.getText().toString().isEmpty();
     }
 
@@ -168,16 +173,66 @@ public class RegisterTransportActivity extends AppCompatActivity {
         btn_Confirm_Transport=findViewById(R.id.btn_Confirm_Transport);
 
 
-        txtNumberPhoneReceiver.setOnFocusChangeListener((v, hasFocus) -> {
-            if(!hasFocus){
-                iSValidKN();
+
+        txtWeight.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length()!=0){
+
+                }
+            }
+        });
+
+        txtWeight.setOnFocusChangeListener((v,hasFocus)->{
+            if(!hasFocus) {
+                if (GiaLVC != 0) {
+
+
+                    APIService.API_SERVICE.getKhoangCach(DiaChiKH, txtAddressReceiver.getText().toString()).enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            int km = response.body();
+                            if (km < 100) {
+
+                                Total = GiaLVC;
+                            }
+                            else
+                            {
+                                Total = GiaLVC + (GiaLVC * (km - 100) / 100);
+                            }
+                            txtThanhToan.setText(String.valueOf(Total));
+                        }
+
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
+                            Log.e("Loi: ", t.toString());
+                        }
+                    });
+
+                }
+
+            }
+
+        });
+
+        txtNumberPhoneReceiver.setOnFocusChangeListener((v, hasFocus) -> {
+            if(!hasFocus) iSValidKN();
         });
 
         btn_Confirm_Transport.setOnClickListener(v -> {
             AlertDialog.Builder Builder = new AlertDialog.Builder(context) ;
             Builder.setMessage("Bạn xác nhận đăng ký gửi hàng?").setCancelable(true)
-                    .setPositiveButton("Xác nhận", (dialogInterface, i) -> AddPhieuGuiHang());
+                    .setPositiveButton("Xác nhận", (dialogInterface, i) -> AddPhieuYeuCau());
             Builder.setNeutralButton("Hủy", (dialog, which) -> {
 
             });
@@ -195,6 +250,7 @@ public class RegisterTransportActivity extends AppCompatActivity {
                 txtLoaiVC.setAdapter(adapterLVC);
                 txtLoaiVC.setOnItemClickListener((parent, view, position, id) -> {
                     GiaLVC=adapterLVC.getItem(position).getGia();
+                    flagLvc=true;
                     MaLVC=adapterLVC.getItem(position).getMaLVC();
                 });
             }
@@ -205,39 +261,17 @@ public class RegisterTransportActivity extends AppCompatActivity {
         });
     }
 
-    void  getData()
-    {
-        MaKH =getIntent().getStringExtra("MaKH");
-        APIService.API_SERVICE.getLoaiHH().enqueue(new Callback<List<LoaiHH>>() {
+    void getData(){
+        APIService.API_SERVICE.getTtKhachHang(MaKH).enqueue(new Callback<List<KhachHang>>() {
             @Override
-            public void onResponse(Call<List<LoaiHH>> call, Response<List<LoaiHH>> response) {
-                adapterLHH = new ArrayAdapter<LoaiHH>(context, android.R.layout.simple_spinner_item,response.body());
-                txtLoaiHH.setAdapter(adapterLHH);
-                txtLoaiHH.setOnItemClickListener((parent, view, position, id) -> MaLHH=adapterLHH.getItem(position).getMaLHH());
-
+            public void onResponse(Call<List<KhachHang>> call, Response<List<KhachHang>> response) {
+                KhachHang kh = response.body().get(0);
+                DiaChiKH=kh.getDiaChi();
             }
             @Override
-            public void onFailure(Call<List<LoaiHH>> call, Throwable t) {
+            public void onFailure(Call<List<KhachHang>> call, Throwable t) {
 
             }
         });
-        APIService.API_SERVICE.getLoaiVC().enqueue(new Callback<List<LoaiVanChuyen>>() {
-            @Override
-            public void onResponse(Call<List<LoaiVanChuyen>> call, Response<List<LoaiVanChuyen>> response) {
-                adapterLVC = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, response.body());
-                txtLoaiVC = findViewById(R.id.txtLoaiVC);
-                txtLoaiVC.setAdapter(adapterLVC);
-                txtLoaiVC.setOnItemClickListener((parent, view, position, id) -> {
-                    GiaLVC=adapterLVC.getItem(position).getGia();
-                    MaLVC=adapterLVC.getItem(position).getMaLVC();
-                });
-            }
-            @Override
-            public void onFailure(Call<List<LoaiVanChuyen>> call, Throwable t) {
-
-            }
-        });
-
-
     }
 }

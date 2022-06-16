@@ -9,9 +9,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,6 +85,7 @@ public class ProfileFragment extends Fragment {
     EditText Txt_UserGender;
     EditText Txt_UserPhone;
     EditText aTxt_UserAddress;
+    ImageView avtCustomer;
     Button btnDangXuat;
     Button btnSuaThongTin;
     boolean flag;
@@ -110,6 +111,7 @@ public class ProfileFragment extends Fragment {
         return fragmentView;
     }
 
+    @SuppressLint("SetTextI18n")
     void loadControll()
     {
         Txt_TenKH=  fragmentView.findViewById(R.id.aTxt_TenKH);
@@ -119,6 +121,7 @@ public class ProfileFragment extends Fragment {
         aTxt_UserAddress=fragmentView.findViewById(R.id.aTxt_UserAddress);
         btnDangXuat=fragmentView.findViewById(R.id.btnDangXuat);
         btnSuaThongTin =fragmentView.findViewById(R.id.btnSuaThongTin);
+        avtCustomer = fragmentView.findViewById(R.id.avtCustomer);
 
         btnDangXuat.setOnClickListener(v -> {
             AlertDialog.Builder Builder = new AlertDialog.Builder(fragmentView.getContext()) ;
@@ -140,11 +143,14 @@ public class ProfileFragment extends Fragment {
             alert.setTitle("Xác nhận!");
             alert.show();
         });
+
         btnSuaThongTin.setOnClickListener(v->{
             if(!flag){
+                btnSuaThongTin.setText("Lưu thông tin");
                 setEnable(true);
             }
             else{
+                btnSuaThongTin.setText("Sửa thông tin");
                 String gt ;
                 if(Txt_UserGender.getText().toString().equals("Nam")) gt = "false";
                 else gt = "true";
@@ -152,7 +158,6 @@ public class ProfileFragment extends Fragment {
                 APIService.API_SERVICE.updKhachHang(kh).enqueue(new Callback<KhachHang>() {
                     @Override
                     public void onResponse(Call<KhachHang> call, Response<KhachHang> response) {
-
 
                         Toast.makeText(fragmentView.getContext(),"Sử thông tin thành công",Toast.LENGTH_LONG).show();
 
@@ -186,8 +191,15 @@ public class ProfileFragment extends Fragment {
                 KhachHang kh = response.body().get(0);
                 String gt;
                 Txt_TenKH.setText(kh.getTenKH());
-                if(kh.getGioiTinh().contains("True")) gt="Nữ";
-                else gt="Nam";
+                if(kh.getGioiTinh().contains("True")) {
+                    gt = "Nữ";
+                    avtCustomer.setImageResource(fragmentView.getContext().getResources().getIdentifier("woman_avt", "drawable", fragmentView.getContext().getPackageName()));
+                }
+                else
+                {
+                    gt="Nam";
+                    avtCustomer.setImageResource(fragmentView.getContext().getResources().getIdentifier("man_avt", "drawable", fragmentView.getContext().getPackageName()));
+                }
                 Txt_UserGender.setText(gt);
                 Txt_UserPhone.setText(kh.getSDT());
                 Txt_UserName.setText(TenTK);

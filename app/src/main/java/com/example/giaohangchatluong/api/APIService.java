@@ -55,6 +55,8 @@ public interface APIService {
     @GET("loaihh")
     Call<List<LoaiHH>> getLoaiHH();
 
+    @GET("khoangcach/{addFrom}/{addTo}")
+    Call<Integer> getKhoangCach(@Path("addFrom") String addFrom , @Path("addTo") String addTo);
 
 
 
