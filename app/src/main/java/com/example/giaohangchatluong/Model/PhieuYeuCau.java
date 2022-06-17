@@ -8,6 +8,8 @@ public class PhieuYeuCau {
     String MaKH;
     String MaKN;
     String MaLVC;
+    String COD;
+    String TrangThai;
     long ThanhToan;
     double KhoiLuong;
 
@@ -67,7 +69,7 @@ public class PhieuYeuCau {
         KhoiLuong = khoiLuong;
     }
 
-    public PhieuYeuCau(String NgayLap, String MaKH, double khoiluong, String MaKN, String MaLVC, long Thanhtoan)
+    public PhieuYeuCau(String NgayLap, String MaKH, double khoiluong, String MaKN, String MaLVC, long Thanhtoan,String COD)
     {
         this.NgayLap=NgayLap;
         this.MaKH=MaKH;
@@ -75,5 +77,6 @@ public class PhieuYeuCau {
         this.MaKN=MaKN;
         this.MaLVC=MaLVC;
         this.ThanhToan=Thanhtoan;
+        this.COD=COD;
     }
 }

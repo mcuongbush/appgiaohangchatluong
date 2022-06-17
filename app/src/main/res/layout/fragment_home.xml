@@ -30,9 +30,37 @@
             />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giao hàng"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="80dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.058">
+
+        <ImageButton
+            android:id="@+id/btn_search_main"
             android:layout_width="80dp"
-            android:layout_height="48dp"
-            android:text="Đăng ký gửi hàng"
+            android:layout_height="80dp"
+            android:background="@drawable/style_corner_button"
+            android:src="@drawable/ic_search_slip" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tra cứu"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="18sp" />

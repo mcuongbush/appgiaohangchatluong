@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GiaoHangChatLuong">
         <activity
+            android:name=".BillInfoMainActivity"
+            android:exported="false" />
+        <activity
             android:name=".ForgetPasswordActivity"
             android:exported="false" />
         <activity

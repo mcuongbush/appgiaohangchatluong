@@ -20,12 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-//
-///**
-// * A simple {@link Fragment} subclass.
-// * Use the {@link HomeFragment#newInstance} factory method to
-// * create an instance of this fragment.
-// */
+
 public class HomeFragment extends Fragment {
 
 //    // TODO: Rename parameter arguments, choose names that match
@@ -70,7 +65,9 @@ public class HomeFragment extends Fragment {
 
     double a;
     double b;
+    ImageButton btn_search_main;
     View fragmentView ;
+    ImageButton btn_RegisterTransport;
     String MaKH;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,13 +75,10 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         fragmentView= inflater.inflate(R.layout.fragment_home, container, false);
 
-        a = 20.4;
-        b = 2.6;
-
-        int t = (int) (a*10) %10;
-        double c = (double) Math.round((a*10+10)/10);
         MainActivity mainActivity = (MainActivity) getActivity();
+        assert mainActivity != null;
         MaKH = mainActivity.getMaKH();
+        btn_search_main = fragmentView.findViewById(R.id.btn_search_main);
         final ListView lst_Item = fragmentView.findViewById(R.id.lst_Item);
         APIService.API_SERVICE.getHoaDon(MaKH).enqueue(new Callback<List<HoaDon>>() {
             @Override
@@ -98,7 +92,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        final ImageButton btn_RegisterTransport = fragmentView.findViewById(R.id.btn_Transport_Register);
+        btn_RegisterTransport = fragmentView.findViewById(R.id.btn_Transport_Register);
         btn_RegisterTransport.setOnClickListener(v -> {
             Intent intent = new Intent(fragmentView.getContext(),RegisterTransportActivity.class);
             intent.putExtra("MaKH",MaKH);

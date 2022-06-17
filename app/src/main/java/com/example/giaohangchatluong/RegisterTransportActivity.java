@@ -64,6 +64,7 @@ public class RegisterTransportActivity extends AppCompatActivity {
     boolean flagLvc;
     long GiaLVC;
     long Total;
+    int km;
 
     boolean availableKN = false;
 
@@ -101,8 +102,8 @@ public class RegisterTransportActivity extends AppCompatActivity {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
             String date = LocalDate.now().format(formatter);
-            PhieuYeuCau pyc =new PhieuYeuCau(LocalDate.now().format(formatter),MaKH,Double.parseDouble(txtWeight.getText().toString()),MaKN,MaLVC,Total);
-            PhieuGuiHang pgh = new PhieuGuiHang(LocalDate.now().format(formatter), String.valueOf(cBxCOD.isChecked()).toUpperCase(),MaKH,MaLVC, MaKN);
+            PhieuYeuCau pyc =new PhieuYeuCau(LocalDate.now().format(formatter),MaKH,Float.parseFloat(txtWeight.getText().toString()),MaKN,MaLVC,Total,String.valueOf(cBxCOD.isChecked()));
+            //PhieuGuiHang pgh = new PhieuGuiHang(LocalDate.now().format(formatter), String.valueOf(cBxCOD.isChecked()).toUpperCase(),MaKH,MaLVC, MaKN);
             APIService.API_SERVICE.addPhieuYeuCau(pyc).enqueue(new Callback<List<PhieuYeuCau>>() {
                 @Override
                 public void onResponse(Call<List<PhieuYeuCau>> call, Response<List<PhieuYeuCau>> response) {
@@ -141,10 +142,24 @@ public class RegisterTransportActivity extends AppCompatActivity {
                         txtReceiverName.setEnabled(false);
                         txtReceiverName.setText(kn.getTenKN());
                         txtAddressReceiver.setText(kn.getDiaChi());
+                        calTotal();
+                        APIService.API_SERVICE.getKhoangCach(DiaChiKH,kn.getDiaChi()).enqueue(new Callback<Integer>() {
+                            @Override
+                            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                                km = response.body();
+                                flagTxtAddress=true;
+                            }
+
+                            @Override
+                            public void onFailure(Call<Integer> call, Throwable t) {
+                                Log.e("Loi: ", t.toString());
+                            }
+                        });
                         availableKN = true;
                     }
                     else {
                         availableKN=false;
+                        flagTxtAddress=false;
                         txtAddressReceiver.setEnabled(true);
                         txtReceiverName.setEnabled(true);
                         txtReceiverName.getText().clear();
@@ -172,7 +187,27 @@ public class RegisterTransportActivity extends AppCompatActivity {
         txtThanhToan =findViewById(R.id.txtThanhToan);
         btn_Confirm_Transport=findViewById(R.id.btn_Confirm_Transport);
 
+        flagTxtWeight = flagTxtAddress = flagLvc = false;
 
+        txtAddressReceiver.setOnFocusChangeListener((v,focus) ->{
+            if(!focus){
+                if(!txtAddressReceiver.getText().toString().isEmpty())
+                {
+                    APIService.API_SERVICE.getKhoangCach(DiaChiKH,txtAddressReceiver.getText().toString()).enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            km=response.body();
+                            calTotal();
+                        }
+
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
+                            Log.e("Loi: ", t.toString());
+                        }
+                    });
+                }
+            }
+        });
 
         txtWeight.addTextChangedListener(new TextWatcher() {
             @Override
@@ -182,57 +217,53 @@ public class RegisterTransportActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                 calTotal();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.length()!=0){
 
-                }
             }
         });
 
-        txtWeight.setOnFocusChangeListener((v,hasFocus)->{
-            if(!hasFocus) {
-                if (GiaLVC != 0) {
-
-
-                    APIService.API_SERVICE.getKhoangCach(DiaChiKH, txtAddressReceiver.getText().toString()).enqueue(new Callback<Integer>() {
-                        @Override
-                        public void onResponse(Call<Integer> call, Response<Integer> response) {
-                            int km = response.body();
-                            if (km < 100) {
-                                double weight = Double.parseDouble(txtWeight.getText().toString());
-                                if(weight <=1 )
-                                {
-                                    Total = GiaLVC;
-                                }
-                                else {
-                                    long tmp_weight = Math.round( ((weight - 1) *10+10 )/10);
-                                    //double w = (double) Math.round(weight * 10) / 10;
-                                    //int t = (int) (w * 10) % 10;
-                                    Total =  GiaLVC + ((GiaLVC/100)* 5 ) * tmp_weight;
-                                }
-                            }
-                            else
-                            {
-                                Total = GiaLVC + ((GiaLVC/100) *25) * (km-100);
-                            }
-                            txtThanhToan.setText(String.valueOf(Total));
-                        }
-
-                        @Override
-                        public void onFailure(Call<Integer> call, Throwable t) {
-                            Log.e("Loi: ", t.toString());
-                        }
-                    });
-
-                }
-
-            }
-
-        });
+//        txtWeight.setOnFocusChangeListener((v,hasFocus)->{
+//            if(!hasFocus) {
+//                if (GiaLVC != 0) {
+//                    APIService.API_SERVICE.getKhoangCach(DiaChiKH, txtAddressReceiver.getText().toString()).enqueue(new Callback<Integer>() {
+//                        @Override
+//                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+//                            int km = response.body();
+//                            if (km < 100) {
+//                                double weight = Double.parseDouble(txtWeight.getText().toString());
+//                                if(weight <=1 )
+//                                {
+//                                    Total = GiaLVC;
+//                                }
+//                                else {
+//                                    long tmp_weight = Math.round( ((weight - 1) *10+10 )/10);
+//                                    //double w = (double) Math.round(weight * 10) / 10;
+//                                    //int t = (int) (w * 10) % 10;
+//                                    Total =  GiaLVC + ((GiaLVC/100)* 5 ) * tmp_weight;
+//                                }
+//                            }
+//                            else
+//                            {
+//                                Total = GiaLVC + ((GiaLVC/100) *25) * (km-100);
+//                            }
+//                            txtThanhToan.setText(String.valueOf(Total));
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<Integer> call, Throwable t) {
+//                            Log.e("Loi: ", t.toString());
+//                        }
+//                    });
+//
+//                }
+//
+//            }
+//
+//        });
 
         txtNumberPhoneReceiver.setOnFocusChangeListener((v, hasFocus) -> {
             if(!hasFocus) iSValidKN();
@@ -259,7 +290,7 @@ public class RegisterTransportActivity extends AppCompatActivity {
                 txtLoaiVC.setAdapter(adapterLVC);
                 txtLoaiVC.setOnItemClickListener((parent, view, position, id) -> {
                     GiaLVC=adapterLVC.getItem(position).getGia();
-                    flagLvc=true;
+                    calTotal();
                     MaLVC=adapterLVC.getItem(position).getMaLVC();
                 });
             }
@@ -282,5 +313,34 @@ public class RegisterTransportActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    void calTotal(){
+        //long total;
+        if (GiaLVC != 0 && km !=0 && !txtWeight.getText().toString().isEmpty() && !txtAddressReceiver.getText().toString().isEmpty()) {
+            double weight = Double.parseDouble(txtWeight.getText().toString());
+            double roundWeight =  Math.round(weight*10 /10);
+            if (km <= 100) {
+                if(weight <=1.6 )
+                {
+                    Total = GiaLVC;
+                }
+                else
+                {
+                    Total =  GiaLVC + ((GiaLVC/100)* 5 ) * (long) (roundWeight-1)*10/10 ;
+
+                }
+            }
+            else
+            {
+                if(weight<=1.6) Total = GiaLVC + ((GiaLVC/100) *25) * (km-100);
+                else{
+                        Total = GiaLVC + ((GiaLVC/100)*5 ) * (long) ((roundWeight-1)*10/10) + ((GiaLVC/100) *25) * (km-100);
+                }
+            }
+            txtThanhToan.setText(String.valueOf(Total));
+        }
+        else txtThanhToan.setText(String.valueOf(0));
     }
 }

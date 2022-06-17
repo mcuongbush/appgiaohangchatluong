@@ -1,5 +1,6 @@
 package com.example.giaohangchatluong.api;
 
+import com.example.giaohangchatluong.Model.CTHD;
 import com.example.giaohangchatluong.Model.HoaDon;
 import com.example.giaohangchatluong.Model.KhachHang;
 import com.example.giaohangchatluong.Model.KhachNhan;
@@ -52,8 +53,9 @@ public interface APIService {
     @GET("taikhoan")
     Call<List<TaiKhoanKH>> getTaiKhoanKH();
 
-    @GET("loaihh")
-    Call<List<LoaiHH>> getLoaiHH();
+    @GET("cthoadon/{SoHD}")
+    Call<List<CTHD>> getCTHD(@Path("SoHD") String SoHD);
+
 
     @GET("khoangcach/{addFrom}/{addTo}")
     Call<Integer> getKhoangCach(@Path("addFrom") String addFrom , @Path("addTo") String addTo);
