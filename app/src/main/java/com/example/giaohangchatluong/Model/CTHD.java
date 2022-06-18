@@ -1,23 +1,24 @@
 package com.example.giaohangchatluong.Model;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class CTHD {
 
     String SoHD;
     String SoPGH;
-    String MaKH;
+    String TenKH;
     String TenKN;
     String NoiDen;
     String NoiGui;
     Date NgayGui;
-    String TongTien;
+    long TongTien;
     String TrangThai;
 
-    public CTHD(String soHD, String soPGH, String maKH, String tenKN, String noiDen, String noiGui, Date ngayGui, String tongTien, String trangThai) {
-        SoHD = soHD;
+    public CTHD( String soPGH, Date ngayGui,String tenKH,String noiGui,  String noiDen,String tenKN,   long tongTien, String trangThai) {
+
         SoPGH = soPGH;
-        MaKH = maKH;
+        TenKH = TenKH;
         TenKN = tenKN;
         NoiDen = noiDen;
         NoiGui = noiGui;
@@ -39,12 +40,12 @@ public class CTHD {
         SoPGH = soPGH;
     }
 
-    public String getMaKH() {
-        return MaKH;
+    public String getTenKH() {
+        return TenKH;
     }
 
-    public void setMaKH(String maKH) {
-        MaKH = maKH;
+    public void setTenKH(String maKH) {
+        TenKH = maKH;
     }
 
     public String getTenKN() {
@@ -79,11 +80,11 @@ public class CTHD {
         NgayGui = ngayGui;
     }
 
-    public String getTongTien() {
+    public long getTongTien() {
         return TongTien;
     }
 
-    public void setTongTien(String tongTien) {
+    public void setTongTien(long tongTien) {
         TongTien = tongTien;
     }
 

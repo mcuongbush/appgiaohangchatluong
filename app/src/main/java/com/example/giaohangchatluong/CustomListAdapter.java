@@ -1,16 +1,13 @@
 package com.example.giaohangchatluong;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.giaohangchatluong.Model.HoaDon;
 
@@ -66,7 +63,7 @@ public class CustomListAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent (context,BillInfoMainActivity.class);
+                Intent intent= new Intent (context, BillInfoActivity.class);
                 intent.putExtra("SoHD",hd.getSoHD());
                 context.startActivity(intent);
                 //Toast.makeText(context, "HD: "+ hd.getSoHD(), Toast.LENGTH_SHORT).show();

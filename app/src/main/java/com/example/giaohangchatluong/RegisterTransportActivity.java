@@ -100,7 +100,6 @@ public class RegisterTransportActivity extends AppCompatActivity {
                 });
             }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-
             String date = LocalDate.now().format(formatter);
             PhieuYeuCau pyc =new PhieuYeuCau(LocalDate.now().format(formatter),MaKH,Float.parseFloat(txtWeight.getText().toString()),MaKN,MaLVC,Total,String.valueOf(cBxCOD.isChecked()));
             //PhieuGuiHang pgh = new PhieuGuiHang(LocalDate.now().format(formatter), String.valueOf(cBxCOD.isChecked()).toUpperCase(),MaKH,MaLVC, MaKN);

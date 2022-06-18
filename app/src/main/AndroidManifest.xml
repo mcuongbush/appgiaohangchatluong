@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GiaoHangChatLuong">
         <activity
-            android:name=".BillInfoMainActivity"
+            android:name=".BillInfoActivity"
             android:exported="false" />
         <activity
             android:name=".ForgetPasswordActivity"
