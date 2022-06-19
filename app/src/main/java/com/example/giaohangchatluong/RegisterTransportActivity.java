@@ -205,6 +205,7 @@ public class RegisterTransportActivity extends AppCompatActivity {
                         }
                     });
                 }
+                else km=0;
             }
         });
 
@@ -225,44 +226,6 @@ public class RegisterTransportActivity extends AppCompatActivity {
             }
         });
 
-//        txtWeight.setOnFocusChangeListener((v,hasFocus)->{
-//            if(!hasFocus) {
-//                if (GiaLVC != 0) {
-//                    APIService.API_SERVICE.getKhoangCach(DiaChiKH, txtAddressReceiver.getText().toString()).enqueue(new Callback<Integer>() {
-//                        @Override
-//                        public void onResponse(Call<Integer> call, Response<Integer> response) {
-//                            int km = response.body();
-//                            if (km < 100) {
-//                                double weight = Double.parseDouble(txtWeight.getText().toString());
-//                                if(weight <=1 )
-//                                {
-//                                    Total = GiaLVC;
-//                                }
-//                                else {
-//                                    long tmp_weight = Math.round( ((weight - 1) *10+10 )/10);
-//                                    //double w = (double) Math.round(weight * 10) / 10;
-//                                    //int t = (int) (w * 10) % 10;
-//                                    Total =  GiaLVC + ((GiaLVC/100)* 5 ) * tmp_weight;
-//                                }
-//                            }
-//                            else
-//                            {
-//                                Total = GiaLVC + ((GiaLVC/100) *25) * (km-100);
-//                            }
-//                            txtThanhToan.setText(String.valueOf(Total));
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<Integer> call, Throwable t) {
-//                            Log.e("Loi: ", t.toString());
-//                        }
-//                    });
-//
-//                }
-//
-//            }
-//
-//        });
 
         txtNumberPhoneReceiver.setOnFocusChangeListener((v, hasFocus) -> {
             if(!hasFocus) iSValidKN();
@@ -316,7 +279,7 @@ public class RegisterTransportActivity extends AppCompatActivity {
 
 
     void calTotal(){
-        //long total;
+        Total = 0;
         if (GiaLVC != 0 && km !=0 && !txtWeight.getText().toString().isEmpty() && !txtAddressReceiver.getText().toString().isEmpty()) {
             double weight = Double.parseDouble(txtWeight.getText().toString());
             double roundWeight =  Math.round(weight*10 /10);

@@ -57,7 +57,7 @@ public class BillInfoActivity extends AppCompatActivity {
                 if(!response.body().isEmpty()){
                     for (CTHD e:  response.body()) {
                         txtSoPGH_CT.setText(e.getSoPGH());
-                        txtNgayGui_CT.setText(e.getNgayGui().toString());
+                        txtNgayGui_CT.setText(e.getNgayGui());
                         txtNoiDen_CT.setText(e.getNoiDen());
                         txtNoiGui_CT.setText(e.getNoiGui());
                         txtTenKH_CT.setText(e.getTenKH());

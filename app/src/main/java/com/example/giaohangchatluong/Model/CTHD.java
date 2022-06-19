@@ -1,6 +1,8 @@
 package com.example.giaohangchatluong.Model;
 
+import java.text.DateFormat;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 
 public class CTHD {
@@ -72,8 +74,9 @@ public class CTHD {
         NoiGui = noiGui;
     }
 
-    public Date getNgayGui() {
-        return NgayGui;
+    public String getNgayGui() {
+
+        return DateFormat.getDateInstance(DateFormat.SHORT).format(NgayGui);
     }
 
     public void setNgayGui(Date ngayGui) {

@@ -160,6 +160,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<TaiKhoanKH>> call, Throwable t) {
                 Toast.makeText(LoginActivity.this,"Call API fail",Toast.LENGTH_SHORT).show();
+                Log.e("Call API",t.toString());
             }
         });
 
