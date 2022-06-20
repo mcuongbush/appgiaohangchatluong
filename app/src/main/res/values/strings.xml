@@ -32,4 +32,5 @@
     <string name="ThanhToan">Thanh toán:</string>
     <string name="vnd">VNĐ</string>
     <string name="ChiTietHoaDon">Chi tiết hóa đơn</string>
+    <string name="TraCuuDonHang">Tra cứu đơn hàng</string>
 </resources>

@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.example.giaohangchatluong.Model.CTHD;
 import com.example.giaohangchatluong.api.APIService;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -49,8 +51,7 @@ public class BillInfoActivity extends AppCompatActivity {
     }
 
     void loadData(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm MM/dd/yyyy");
         APIService.API_SERVICE.getCTHD(SoHD).enqueue(new Callback<List<CTHD>>() {
             @Override
             public void onResponse(Call<List<CTHD>> call, Response<List<CTHD>> response) {

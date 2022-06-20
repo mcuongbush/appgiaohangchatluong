@@ -63,8 +63,7 @@ public class HomeFragment extends Fragment {
 //        }
 //    }
 
-    double a;
-    double b;
+    
     ImageButton btn_search_main;
     View fragmentView ;
     ImageButton btn_RegisterTransport;

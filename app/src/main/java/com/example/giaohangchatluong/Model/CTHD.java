@@ -76,7 +76,9 @@ public class CTHD {
 
     public String getNgayGui() {
 
-        return DateFormat.getDateInstance(DateFormat.SHORT).format(NgayGui);
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm MM/dd/yyyy");
+        //formatter.parse(NgayGui.toString());
+        return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(NgayGui);
     }
 
     public void setNgayGui(Date ngayGui) {
