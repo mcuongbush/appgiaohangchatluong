@@ -115,7 +115,7 @@ public class RegisterAccountActivity extends AppCompatActivity {
                                         @Override
                                         public void onResponse(Call<List<TaiKhoanKH>> call, Response<List<TaiKhoanKH>> response) {
                                             Toast.makeText(context, "Đăng ký thành công!", Toast.LENGTH_LONG).show();
-                                            LoginActivity.getInstance().getListTK();
+                                            //LoginActivity.getInstance().getListTK();
                                             finishAffinity();
                                             startActivity(new Intent(context,LoginActivity.class));
                                         }

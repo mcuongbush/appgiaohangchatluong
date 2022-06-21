@@ -38,12 +38,13 @@ public class LoginActivity extends AppCompatActivity {
     AlertDialog.Builder builder;
     private EditText txtUsername;
     private EditText txtPassword;
+    Button btn_login;
     private static List<TaiKhoanKH> lstTaiKhoan;
     TextView txtForgetPass;
     public boolean flag = false;
 
-    String strUsername;
-    String strPassword;
+    String Username;
+    String Password;
 
     public static LoginActivity instant ;
     static String MaKH;
@@ -60,54 +61,31 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        loadControll();
 
-        txtUsername=findViewById(R.id.txtUsername);
-        txtPassword=findViewById(R.id.txtPassword);
-        txtForgetPass=findViewById(R.id.txtForgetPass);
-        btn_search=findViewById(R.id.btn_search);
 
-        btn_search.setOnClickListener(v->{
-            startActivity(new Intent(instant,SearchActivity.class));
-        });
-
-        txtForgetPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               Intent intent =new Intent(instant,ForgetPasswordActivity.class);
-               startLauncher.launch(intent);
-
+        try {
+            SharedPreferences sp1 = this.getSharedPreferences("Login", MODE_PRIVATE);
+            if(sp1.getString("sttLog",null).contains("true"))
+            {
+                Username = "";
+                Password = "";
             }
-        });
-
-        Button btn_login = findViewById(R.id.btn_Login);
-        btn_login.setOnClickListener(v -> login());
-
-
-
-            try {
-                SharedPreferences sp1 = this.getSharedPreferences("Login", MODE_PRIVATE);
-                if(sp1.getString("sttLog",null).contains("true"))
-                {
-                    strUsername = "";
-                    strPassword = "";
-                }
-                else
-                {
-                    @SuppressLint("CommitPrefEdits") SharedPreferences.Editor Ed = sp1.edit();
-                    Ed.putString("sttLog", "false");
-                    Ed.apply();
-                    strUsername = sp1.getString("Unm", null);
-                    strPassword = sp1.getString("Psw", null);
-                }
-            }catch (Exception e){
-                Log.e("Loi",e.toString());
+            else
+            {
+                @SuppressLint("CommitPrefEdits") SharedPreferences.Editor Ed = sp1.edit();
+                Ed.putString("sttLog", "false");
+                Ed.apply();
+                Username = sp1.getString("Unm", null);
+                Password = sp1.getString("Psw", null);
+                login(Username,Password);
             }
+        }catch (Exception e){
+            Log.e("Loi",e.toString());
+        }
 
 
         instant = this;
-        lstTaiKhoan = new ArrayList<>();
-        getListTK();
-
 
         if(!isNetworkAvailable())
         {
@@ -132,41 +110,60 @@ public class LoginActivity extends AppCompatActivity {
         return instant;
     }
 
+    void loadControll(){
+        txtUsername=findViewById(R.id.txtUsername);
+        txtPassword=findViewById(R.id.txtPassword);
+        txtForgetPass=findViewById(R.id.txtForgetPass);
+        btn_search=findViewById(R.id.btn_search);
+        btn_login = findViewById(R.id.btn_Login);
+        //Username = txtUsername.getText().toString().trim();
+        //Password = txtPassword.getText().toString().trim();
+        btn_login.setOnClickListener(v -> login(txtUsername.getText().toString().trim(),txtPassword.getText().toString().trim()));
+
+        btn_search.setOnClickListener(v->{
+            startActivity(new Intent(instant,SearchActivity.class));
+        });
+
+        txtForgetPass.setOnClickListener(v-> {
+            Intent intent =new Intent(instant,ForgetPasswordActivity.class);
+            startLauncher.launch(intent);
+        });
+    }
+
     public static void setInstant(LoginActivity instant){
         LoginActivity.instant=instant;
     }
 
-    void getListTK()
-    {
-
-        APIService.API_SERVICE.getTaiKhoanKH().enqueue(new Callback<List<TaiKhoanKH>>() {
-            @Override
-            public void onResponse(Call<List<TaiKhoanKH>> call, Response<List<TaiKhoanKH>> response) {
-                lstTaiKhoan = response.body();
-                for ( TaiKhoanKH e: lstTaiKhoan) {
-
-                    if ((e.getTenTK().equals(strUsername) )&& e.getMatKhau().equals(strPassword)) {
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        MaKH = e.getMaKH();
-                        intent.putExtra("MaKH", e.getMaKH());
-                        intent.putExtra("TenTK", strUsername);
-                        finishAffinity();
-                        startLauncher.launch(intent);
-                        String msg = "Chào mừng bạn quay trở lại!";
-                        Toast.makeText(instant, msg, Toast.LENGTH_LONG).show();
-                        flag = true;
-                        break;
-                    }
-                }
-            }
-            @Override
-            public void onFailure(Call<List<TaiKhoanKH>> call, Throwable t) {
-                Toast.makeText(LoginActivity.this,"Call API fail",Toast.LENGTH_SHORT).show();
-                Log.e("Call API",t.toString());
-            }
-        });
-
-    }
+//    void getListTK()
+//    {
+//
+//        APIService.API_SERVICE.getTaiKhoanKH().enqueue(new Callback<List<TaiKhoanKH>>() {
+//            @Override
+//            public void onResponse(Call<List<TaiKhoanKH>> call, Response<List<TaiKhoanKH>> response) {
+//                lstTaiKhoan = response.body();
+//                for ( TaiKhoanKH e: lstTaiKhoan) {
+//
+//                    if ((e.getTenTK().equals(strUsername) )&& e.getMatKhau().equals(strPassword)) {
+//                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                        MaKH = e.getMaKH();
+//                        intent.putExtra("MaKH", e.getMaKH());
+//                        intent.putExtra("TenTK", strUsername);
+//                        finishAffinity();
+//                        startLauncher.launch(intent);
+//                        String msg = "Chào mừng bạn quay trở lại!";
+//                        Toast.makeText(instant, msg, Toast.LENGTH_LONG).show();
+//                        flag = true;
+//                        break;
+//                    }
+//                }
+//            }
+//            @Override
+//            public void onFailure(Call<List<TaiKhoanKH>> call, Throwable t) {
+//
+//            }
+//        });
+//
+//    }
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -181,33 +178,67 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void login() {
-        strUsername = txtUsername.getText().toString().trim();
-        strPassword = txtPassword.getText().toString().trim();
-        for ( TaiKhoanKH e: lstTaiKhoan) {
+    public void login(String strUsername, String strPassword ) {
 
-            if (e.getTenTK().equals(strUsername) && e.getMatKhau().equals(strPassword)) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                MaKH = e.getMaKH();
-                intent.putExtra("MaKH", e.getMaKH());
-                intent.putExtra("TenTK", strUsername);
-                SharedPreferences sp = getSharedPreferences("Login", MODE_PRIVATE);
-                SharedPreferences.Editor Ed = sp.edit();
-                Ed.putString("sttLog", "false");
-                Ed.putString("Unm", strUsername);
-                Ed.putString("Psw", strPassword);
-                Ed.apply();
-                finishAffinity();
-                startLauncher.launch(intent);
-                String msg = "Chào mừng bạn quay trở lại!";
-                Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-                flag = true;
-                break;
+
+        APIService.API_SERVICE.getTaiKhoanKH(strUsername,strPassword).enqueue(new Callback<List<TaiKhoanKH>>() {
+            @Override
+            public void onResponse(Call<List<TaiKhoanKH>> call, Response<List<TaiKhoanKH>> response) {
+                if(response.body()!=null){
+                    TaiKhoanKH e = response.body().get(0);
+                    if (e.getTenTK().equals(strUsername) && e.getMatKhau().equals(strPassword)) {
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        MaKH = e.getMaKH();
+                        intent.putExtra("MaKH", e.getMaKH());
+                        intent.putExtra("TenTK", strUsername);
+                        SharedPreferences sp = getSharedPreferences("Login", MODE_PRIVATE);
+                        SharedPreferences.Editor Ed = sp.edit();
+                        Ed.putString("sttLog", "false");
+                        Ed.putString("Unm", strUsername);
+                        Ed.putString("Psw", strPassword);
+                        Ed.apply();
+                        finishAffinity();
+                        startLauncher.launch(intent);
+                        String msg = "Chào mừng bạn quay trở lại!";
+                        Toast.makeText(instant, msg, Toast.LENGTH_LONG).show();
+                        flag = true;
+                    }
+
+                }
+                if(!flag) {
+                    String msg = "Sai tài khoản hoặc mật khẩu, vui lòng thử lại!";
+                    Toast.makeText(instant, msg, Toast.LENGTH_LONG).show();
+                }
             }
-        }
-        if(!flag) {
-            String msg = "Sai tài khoản hoặc mật khẩu, vui lòng thử lại!";
-            Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-        }
+
+            @Override
+            public void onFailure(Call<List<TaiKhoanKH>> call, Throwable t) {
+                Toast.makeText(LoginActivity.this,"Call API fail",Toast.LENGTH_SHORT).show();
+                Log.e("Call API",t.toString());
+            }
+        });
+
+//        for ( TaiKhoanKH e: lstTaiKhoan) {
+//
+//            if (e.getTenTK().equals(strUsername) && e.getMatKhau().equals(strPassword)) {
+//                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                MaKH = e.getMaKH();
+//                intent.putExtra("MaKH", e.getMaKH());
+//                intent.putExtra("TenTK", strUsername);
+//                SharedPreferences sp = getSharedPreferences("Login", MODE_PRIVATE);
+//                SharedPreferences.Editor Ed = sp.edit();
+//                Ed.putString("sttLog", "false");
+//                Ed.putString("Unm", strUsername);
+//                Ed.putString("Psw", strPassword);
+//                Ed.apply();
+//                finishAffinity();
+//                startLauncher.launch(intent);
+//                String msg = "Chào mừng bạn quay trở lại!";
+//                Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+//                flag = true;
+//                break;
+//            }
+//        }
+
     }
 }

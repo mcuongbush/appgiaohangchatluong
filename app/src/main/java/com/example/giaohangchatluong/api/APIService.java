@@ -54,8 +54,8 @@ public interface APIService {
     @GET("loaivc")
     Call<List<LoaiVanChuyen>> getLoaiVC();
 
-    @GET("taikhoan")
-    Call<List<TaiKhoanKH>> getTaiKhoanKH();
+    @GET("taikhoan/{TenTK}/{MatKhau}")
+    Call<List<TaiKhoanKH>> getTaiKhoanKH(@Path("TenTK") String TenTK, @Path("MatKhau") String MatKhau);
 
     @GET("cthoadon/{SoHD}")
     Call<List<CTHD>> getCTHD(@Path("SoHD") String SoHD);
