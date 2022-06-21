@@ -16,16 +16,18 @@ public class CTVanChuyen {
         TenNK = tenNK;
     }
 
-    public String getNgayNhapKho() {
-        return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(NgayNhapKho);
+    public Date getNgayNhapKho() {
+        //return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(NgayNhapKho);
+        return NgayNhapKho;
     }
 
     public void setNgayNhapKho(Date ngayNhapKho) {
         NgayNhapKho = ngayNhapKho;
     }
 
-    public String getNgayXuatKho() {
-        return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(NgayXuatKho);
+    public Date getNgayXuatKho() {
+        return NgayNhapKho;
+        //return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(NgayXuatKho);
     }
 
     public void setNgayXuatKho(Date ngayXuatKho) {

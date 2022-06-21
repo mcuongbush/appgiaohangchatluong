@@ -23,16 +23,48 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_search_ct"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/TraCuu"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        app:cornerRadius="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toEndOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editText"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="235dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="16dp"
+
+        android:layout_marginTop="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txt_MaHD"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Mã hóa đơn"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <ListView
         android:id="@+id/lst_ctvanchuyen"
-        android:layout_width="413dp"
-        android:layout_height="630dp"
+        android:layout_width="392dp"
+        android:layout_height="546dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.037" />
+        app:layout_constraintTop_toBottomOf="@+id/editText" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

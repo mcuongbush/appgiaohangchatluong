@@ -30,17 +30,17 @@ public class CTHDAdapter extends BaseAdapter {
     }
     @Override
     public int getCount() {
-        return 0;
+        return lstItem.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return lstItem.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -64,14 +64,14 @@ public class CTHDAdapter extends BaseAdapter {
         else holder.mess.setText("Đơn hàng đã xuất kho " +theoDoi.getTenNK());
 
         //holder.status.setImageResource(imgID);
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent (context, BillInfoActivity.class);
-                context.startActivity(intent);
-                //Toast.makeText(context, "HD: "+ hd.getSoHD(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        convertView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= new Intent (context, BillInfoActivity.class);
+//                context.startActivity(intent);
+//                //Toast.makeText(context, "HD: "+ hd.getSoHD(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
         return convertView;
     }
     static class ViewHolder{

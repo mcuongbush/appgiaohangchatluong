@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment {
 //        }
 //    }
 
-    
+
     ImageButton btn_search_main;
     View fragmentView ;
     ImageButton btn_RegisterTransport;
@@ -77,7 +77,10 @@ public class HomeFragment extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         assert mainActivity != null;
         MaKH = mainActivity.getMaKH();
-        btn_search_main = fragmentView.findViewById(R.id.btn_search_main);
+        btn_search_main = fragmentView.findViewById(R.id.btn_search);
+        btn_search_main.setOnClickListener(v->{
+            startActivity(new Intent(fragmentView.getContext(),SearchActivity.class));
+        });
         final ListView lst_Item = fragmentView.findViewById(R.id.lst_Item);
         APIService.API_SERVICE.getHoaDon(MaKH).enqueue(new Callback<List<HoaDon>>() {
             @Override

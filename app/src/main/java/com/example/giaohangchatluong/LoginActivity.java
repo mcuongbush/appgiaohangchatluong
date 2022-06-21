@@ -66,7 +66,9 @@ public class LoginActivity extends AppCompatActivity {
         txtForgetPass=findViewById(R.id.txtForgetPass);
         btn_search=findViewById(R.id.btn_search);
 
-
+        btn_search.setOnClickListener(v->{
+            startActivity(new Intent(instant,SearchActivity.class));
+        });
 
         txtForgetPass.setOnClickListener(new View.OnClickListener() {
             @Override
