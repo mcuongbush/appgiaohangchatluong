@@ -10,6 +10,7 @@ public class CTHD {
     String SoHD;
     String SoPGH;
     String TenKH;
+    String TenLVC;
     String TenKN;
     String NoiDen;
     String NoiGui;
@@ -17,10 +18,11 @@ public class CTHD {
     long TongTien;
     String TrangThai;
 
-    public CTHD( String soPGH, Date ngayGui,String tenKH,String noiGui,  String noiDen,String tenKN,   long tongTien, String trangThai) {
+    public CTHD( String soPGH, Date ngayGui,String tenlvc,String tenKH,String noiGui,  String noiDen,String tenKN,   long tongTien, String trangThai) {
 
         SoPGH = soPGH;
-        TenKH = TenKH;
+        TenKH = tenKH;
+        TenLVC=tenlvc;
         TenKN = tenKN;
         NoiDen = noiDen;
         NoiGui = noiGui;
@@ -85,6 +87,14 @@ public class CTHD {
         NgayGui = ngayGui;
     }
 
+    public String getTenLVC() {
+        return TenLVC;
+    }
+
+    public void setTenLVC(String tenLVC) {
+        TenLVC = tenLVC;
+    }
+
     public long getTongTien() {
         return TongTien;
     }
@@ -100,4 +110,5 @@ public class CTHD {
     public void setTrangThai(String trangThai) {
         TrangThai = trangThai;
     }
+
 }
