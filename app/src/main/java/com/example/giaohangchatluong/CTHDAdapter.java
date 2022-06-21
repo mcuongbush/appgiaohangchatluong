@@ -45,33 +45,30 @@ public class CTHDAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        CTHDAdapter.ViewHolder holder;
+        ViewHolder holder;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.item_cthd_layout, null);
-            holder = new CTHDAdapter.ViewHolder();
+            holder = new ViewHolder();
             holder.time = (TextView) convertView.findViewById(R.id.txtDateTimeCTHD);
             holder.mess = (TextView) convertView.findViewById(R.id.txtStatusCTHD);
             convertView.setTag(holder);
         } else {
-            holder = (CTHDAdapter.ViewHolder) convertView.getTag();
+            holder = (ViewHolder) convertView.getTag();
         }
         TheoDoi theoDoi = this.lstItem.get(position);
 
-        holder.time.setText(theoDoi.getTime());
+        try{
+            holder.time.setText(theoDoi.getTime());
+        }catch (NullPointerException e){
+            holder.time.setText("null");
+        }
+
         if(!theoDoi.isSukien()){
             holder.mess.setText("Đơn hàng đã đến kho "+ theoDoi.getTenNK());
         }
         else holder.mess.setText("Đơn hàng đã xuất kho " +theoDoi.getTenNK());
 
-        //holder.status.setImageResource(imgID);
-//        convertView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent= new Intent (context, BillInfoActivity.class);
-//                context.startActivity(intent);
-//                //Toast.makeText(context, "HD: "+ hd.getSoHD(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        convertView.setEnabled(false);
         return convertView;
     }
     static class ViewHolder{

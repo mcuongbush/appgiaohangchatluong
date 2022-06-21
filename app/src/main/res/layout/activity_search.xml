@@ -27,24 +27,24 @@
         android:id="@+id/btn_search_ct"
         android:layout_width="130dp"
         android:layout_height="50dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:text="@string/TraCuu"
         android:textColor="@color/white"
         android:textSize="13sp"
         app:cornerRadius="13dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toEndOf="@+id/editText"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editText"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="235dp"
-        android:layout_height="55dp"
+        android:layout_width="237dp"
+        android:layout_height="58dp"
         android:layout_marginStart="16dp"
 
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
@@ -60,7 +60,6 @@
         android:id="@+id/lst_ctvanchuyen"
         android:layout_width="392dp"
         android:layout_height="546dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"

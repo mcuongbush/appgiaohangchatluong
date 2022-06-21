@@ -26,7 +26,7 @@ public class CTVanChuyen {
     }
 
     public Date getNgayXuatKho() {
-        return NgayNhapKho;
+        return NgayXuatKho;
         //return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(NgayXuatKho);
     }
 

@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         assert mainActivity != null;
         MaKH = mainActivity.getMaKH();
-        btn_search_main = fragmentView.findViewById(R.id.btn_search);
+        btn_search_main = fragmentView.findViewById(R.id.btn_search_main);
         btn_search_main.setOnClickListener(v->{
             startActivity(new Intent(fragmentView.getContext(),SearchActivity.class));
         });
