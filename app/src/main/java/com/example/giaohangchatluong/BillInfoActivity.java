@@ -50,19 +50,13 @@ public class BillInfoActivity extends AppCompatActivity {
         APIService.API_SERVICE.getCTVanChuyen(SoHD).enqueue(new Callback<List<CTVanChuyen>>() {
             @Override
             public void onResponse(Call<List<CTVanChuyen>> call, Response<List<CTVanChuyen>> response) {
-                List<TheoDoi> lst = new ArrayList<>();
-                if(!response.body().isEmpty()) {
-                    for(int i = response.body().size()-1 ; i >=0;i--){
-                        CTVanChuyen e = response.body().get(i);
-                        lst.add(new TheoDoi(e.getNgayNhapKho(), false, e.getTenNK()));
-                        try {
-                            if(e.getNgayXuatKho()!=null) lst.add(new TheoDoi(e.getNgayXuatKho(), true, e.getTenNK()));
-                            e.getNgayXuatKho();
 
-                        }catch (NullPointerException exception) {
-                            exception.printStackTrace();
-                            lst.add(new TheoDoi(null, true, e.getTenNK()));
-                        }
+                if(!response.body().isEmpty()) {
+                    List<TheoDoi> lst = new ArrayList<>();
+                    for(int i = response.body().size()-1 ; i >=0 ;i--){
+                        CTVanChuyen e = response.body().get(i);
+                        if(e.getNgayXuatKho()!=null) lst.add(new TheoDoi(e.getNgayXuatKho(), true, e.getTenNK()));
+                        lst.add(new TheoDoi(e.getNgayNhapKho(),false,e.getTenNK()));
                     }
                     lst_ctvanchuyen_cthd.setAdapter( new CTHDAdapter(context,lst));
                     lst_ctvanchuyen_cthd.setEnabled(false);

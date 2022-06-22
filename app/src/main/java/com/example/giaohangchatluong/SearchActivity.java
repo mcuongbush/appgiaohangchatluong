@@ -25,7 +25,6 @@ public class SearchActivity extends AppCompatActivity {
 
     Button btn_Search_ct;
     EditText txt_MaHD;
-    //ListView lst_ctvanchuyen;
     Context context;
     List<TheoDoi> lst;
     @Override
@@ -53,15 +52,8 @@ public class SearchActivity extends AppCompatActivity {
                     if(!response.body().isEmpty()) {
                         for(int i = response.body().size()-1 ; i >=0;i--){
                             CTVanChuyen e = response.body().get(i);
+                            if(e.getNgayXuatKho()!=null) lst.add(new TheoDoi(e.getNgayXuatKho(), true, e.getTenNK()));
                             lst.add(new TheoDoi(e.getNgayNhapKho(), false, e.getTenNK()));
-                            try {
-                                if(e.getNgayXuatKho()!=null) lst.add(new TheoDoi(e.getNgayXuatKho(), true, e.getTenNK()));
-                                e.getNgayXuatKho();
-
-                            }catch (NullPointerException exception) {
-                                exception.printStackTrace();
-                                lst.add(new TheoDoi(null, true, e.getTenNK()));
-                            }
                         }
                         lst_ctvanchuyen.setAdapter( new CTHDAdapter(context,lst));
                     }
@@ -91,10 +83,8 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     void loadControl(){
-        //ListView lst_ctvanchuyen = findViewById(R.id.lst_ctvanchuyen);
         txt_MaHD=findViewById(R.id.txt_MaHD);
         btn_Search_ct=findViewById(R.id.btn_search_ct);
-        //lst_ctvanchuyen = findViewById(R.id.lst_ctvanchuyen);
 
     }
 
