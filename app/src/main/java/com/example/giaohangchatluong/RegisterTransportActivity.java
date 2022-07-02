@@ -1,12 +1,9 @@
 package com.example.giaohangchatluong;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -19,15 +16,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.giaohangchatluong.Model.KhachHang;
 import com.example.giaohangchatluong.Model.KhachNhan;
-import com.example.giaohangchatluong.Model.LoaiHH;
 import com.example.giaohangchatluong.Model.LoaiVanChuyen;
-import com.example.giaohangchatluong.Model.PhieuGuiHang;
 import com.example.giaohangchatluong.Model.PhieuYeuCau;
 import com.example.giaohangchatluong.api.APIService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,28 +30,19 @@ import retrofit2.Response;
 
 public class RegisterTransportActivity extends AppCompatActivity {
 
-    //public static List<LoaiHH> lstLHH;
     RegisterTransportActivity context;
-
-    //List<String> lstDV;
-
-
-
     TextView txtThanhToan;
     EditText txtWeight;
     EditText txtReceiverName;
     EditText txtNumberPhoneReceiver;
     EditText txtAddressReceiver;
-    AutoCompleteTextView txtLoaiHH;
     AutoCompleteTextView txtLoaiVC;
     CheckBox cBxCOD;
 
-    ArrayAdapter<LoaiHH> adapterLHH;
     ArrayAdapter<LoaiVanChuyen> adapterLVC;
     String DiaChiKH;
     String MaKH;
     String MaLVC;
-    String MaLHH;
     String MaKN;
     boolean flagTxtAddress;
     boolean flagTxtWeight;
@@ -102,7 +87,6 @@ public class RegisterTransportActivity extends AppCompatActivity {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
             String date = LocalDate.now().format(formatter);
             PhieuYeuCau pyc =new PhieuYeuCau(LocalDate.now().format(formatter),MaKH,Float.parseFloat(txtWeight.getText().toString()),MaKN,MaLVC,Total,String.valueOf(cBxCOD.isChecked()));
-            //PhieuGuiHang pgh = new PhieuGuiHang(LocalDate.now().format(formatter), String.valueOf(cBxCOD.isChecked()).toUpperCase(),MaKH,MaLVC, MaKN);
             APIService.API_SERVICE.addPhieuYeuCau(pyc).enqueue(new Callback<List<PhieuYeuCau>>() {
                 @Override
                 public void onResponse(Call<List<PhieuYeuCau>> call, Response<List<PhieuYeuCau>> response) {
@@ -296,9 +280,18 @@ public class RegisterTransportActivity extends AppCompatActivity {
             }
             else
             {
-                if(weight<=1.6) Total = GiaLVC + ((GiaLVC/100) *25) * (km-100);
+                if(weight<=1.6) {
+                    if ((km - 100) / 100 < 1) {
+                        Total = GiaLVC + ((GiaLVC / 100) * 25);
+                    } else {
+                        int t = (km - 100) / 100;
+                        Total = GiaLVC + ((GiaLVC / 100) * 25) * t;
+                    }
+                }
+                //if(weight<=1.6) Total = GiaLVC + ((GiaLVC/100) *25) * (km-100);
                 else{
-                        Total = GiaLVC + ((GiaLVC/100)*5 ) * (long) ((roundWeight-1)*10/10) + ((GiaLVC/100) *25) * (km-100);
+                    int t = (km - 100) / 100;
+                        Total = GiaLVC + (((GiaLVC/100)*5 ) * (long) ((roundWeight-1)*1)) + ((GiaLVC/100) *25) * t;
                 }
             }
             txtThanhToan.setText(String.valueOf(Total));

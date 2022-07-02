@@ -8,23 +8,21 @@
     tools:context=".RegisterTransportActivity">
 
 
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
         android:text="@string/DangKyGuiHang"
         android:textAllCaps="true"
         android:textColor="#5468CC"
         android:textSize="25sp"
-        android:layout_marginTop="60dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout6"
@@ -156,29 +154,44 @@
             android:textSize="13sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtThanhToan"
-                android:layout_width="110dp"
-                android:layout_height="27dp"
-                android:layout_marginStart="180dp"
-                android:layout_marginTop="24dp"
-                android:text="0"
-                android:textAlignment="textEnd"
-                android:textColor="@color/main_color"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/txtVND"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cBxCOD">
 
-            </com.google.android.material.textview.MaterialTextView>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtThanhToan"
+        android:layout_width="110dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="184dp"
+        android:text="0"
+        android:textAlignment="textEnd"
+        android:textColor="@color/main_color"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/txtVND"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cBxCOD">
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtVND"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="184dp"
+        android:layout_marginEnd="60dp"
+        android:text="@string/vnd"
+        android:textColor="@color/main_color"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cBxCOD">
+
+    </com.google.android.material.textview.MaterialTextView>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/txtVTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="184dp"
         android:text="@string/ThanhToan"
         android:textColor="@color/main_color"
         android:textSize="18sp"
@@ -188,18 +201,18 @@
     </com.google.android.material.textview.MaterialTextView>
 
     <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtVND"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="68dp"
-                android:text="@string/vnd"
-                android:textColor="@color/main_color"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cBxCOD">
+        android:id="@+id/txtNote"
+        android:layout_width="343dp"
+        android:layout_height="143dp"
+        android:layout_marginTop="8dp"
+        android:text="Tổng tiền = Giá loại vận chuyển (bao gồm 100km và 1kg hàng hóa).\nNếu số km vượt quá 100 thì \n\t*Tổng tiền = Giá loại vận chuyển * 25% Giá loại vận chuyển trên mỗi km.\nNếu cân nặng vượt quá 1kg thì \n\t*Tổng tiền = Giá loại vận chuyển * 5% Giá loại vận chuyển trên mỗi kg hàng hóa."
+        android:textColor="@color/main_color"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cBxCOD">
 
-            </com.google.android.material.textview.MaterialTextView>
+    </com.google.android.material.textview.MaterialTextView>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout4"
@@ -241,18 +254,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout17" />
 
     <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_Confirm_Transport"
-                android:layout_width="130dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="88dp"
-                android:text="@string/XacNhan"
-                android:textColor="@color/white"
-                android:textSize="13sp"
-                app:cornerRadius="13dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtVTotal" />
+        android:id="@+id/btn_Confirm_Transport"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/XacNhan"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        app:cornerRadius="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtVTotal" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
